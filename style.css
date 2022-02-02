@@ -1,0 +1,15 @@
+#top-left-div{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(24,26,27);
+    border-radius: 5px;
+}
+
+#current-location-button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
