@@ -37,6 +37,8 @@ map.on('load',()=>{
             place = data.features[0].text;
             console.log(place);
 
+            document.getElementById("cities").innerHTML += ";"+place;
+
             popup = new mapboxgl.Popup()
                 .setLngLat(pos)
                 .setHTML(`<div id='pu-div'><p>${place}</p><button id='pu-button' onclick='pufunc()'>confirm</button></div>`)

@@ -24,3 +24,7 @@
     display: grid;
     place-items:center;
 }
+
+#cities{
+    visibility: hidden;
+}
