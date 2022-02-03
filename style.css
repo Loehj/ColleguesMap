@@ -19,3 +19,8 @@
 #confirm{
 
 }
+
+#pu-div{
+    display: grid;
+    place-items:center;
+}

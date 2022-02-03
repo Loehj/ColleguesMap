@@ -3,7 +3,8 @@ const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
     center: [9.236662699026414,49.18334730166159], // starting position [lng, lat]
-    zoom: 5 // starting zoom
+    zoom: 5, // starting zoom
+    doubleClickZoom: false
 });
 
 
@@ -21,3 +22,32 @@ types: 'place',
 //reverseGeocode: true
 })
 );
+
+var place;
+var pos;
+var popup;
+
+map.on('load',()=>{
+    map.on('dblclick', function (e){
+        pos = e.lngLat.toArray();
+
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pos[0]},${pos[1]}.json?types=place&access_token=${mapboxgl.accessToken}`).then(response =>{
+            return response.json();
+        }).then(data =>{
+            place = data.features[0].text;
+            console.log(place);
+
+            popup = new mapboxgl.Popup()
+                .setLngLat(pos)
+                .setHTML(`<div id='pu-div'><p>${place}</p><button id='pu-button' onclick='pufunc()'>confirm</button></div>`)
+                .addTo(map);
+        })
+    });
+});
+
+function pufunc(){
+    new mapboxgl.Marker()
+        .setLngLat(pos)
+        .addTo(map);
+    popup.remove();
+}
