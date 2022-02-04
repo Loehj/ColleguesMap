@@ -19,11 +19,10 @@ const client = new Client({
 const app = express();
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Running on port ${port}`));
-
+client.connect();
 app.get('/', async (req, res) => {
 
 	try {
-        await client.connect();
 		const result = await client.query('SELECT NOW()');
 
 		// TODO: Do something with the result
