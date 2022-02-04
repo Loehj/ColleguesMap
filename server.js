@@ -13,6 +13,7 @@ const client = new Client({
 	database: config.database,
 	password: config.password,
 	port: config.port,
+    ssl: true
 });
 
 const app = express();
@@ -20,15 +21,16 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Running on port ${port}`));
 
 app.get('/', async (req, res) => {
-	await client.connect();
 
 	try {
+        await client.connect();
 		const result = await client.query('SELECT NOW()');
 
 		// TODO: Do something with the result
 	} catch (e) {
 		console.error('Error while fetching query', e);
 		res.sendStatus(500);
+        return;
 	}
 
 	res.status(200).send('Test');
