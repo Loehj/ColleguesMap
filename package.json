@@ -1,0 +1,25 @@
+{
+  "name": "colleguesmap",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loehj/ColleguesMap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Loehj/ColleguesMap/issues"
+  },
+  "homepage": "https://github.com/Loehj/ColleguesMap#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
