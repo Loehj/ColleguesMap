@@ -1,12 +1,18 @@
 const express = require('express');
 const { Client } = require('pg');
 
+// load env variables from .env for development
+require('dotenv').config();
+
+const parse = require('pg-connection-string').parse;
+const config = parse(process.env.DATABASE_URL || '');
+
 const client = new Client({
-	user: 'gxqitzqehblwik',
-	host: 'ec2-54-247-96-153.eu-west-1.compute.amazonaws.com',
-	database: 'df8tqi9etlsvm',
-	password: '178dc89973a69c877c69af23df1b6deb7db6d920006148c57412225df4cba8b6',
-	port: 5432,
+	user: config.user,
+	host: config.host,
+	database: config.database,
+	password: config.password,
+	port: config.port,
 });
 
 const app = express();
