@@ -20,11 +20,17 @@ app.listen(process.env.PORT || 3000, () => console.log(`Running on port 3000`));
 
 app.get('/', async (req, res) => {
 	await client.connect();
-	client.query('SELECT NOW()', async (err, res) => {
-		console.log(err, res);
-		res.status(200).send(res);
-		await client.end();
-	});
+
+	try {
+		const result = await client.query('SELECT NOW()');
+
+		// TODO: Do something with the result
+	} catch (e) {
+		console.error('Error while fetching query', e);
+		res.sendStatus(500);
+	}
+
+	res.status(200).send('Test');
 });
 
 app.post('/addCity', (req, res) => {
