@@ -29,7 +29,8 @@ var place;
 var pos;
 var popup;
 
-fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
+map.on('load', () => {
+    fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
     return response.json();
 }).then(data => {
     for (let i = 0; i < data.length; i++) {
@@ -37,10 +38,9 @@ fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
         new mapboxgl.Marker()
         .setLngLat([city.lng, city.lat])
         .addTo(map);
+        console.log(city);
     }
 })
-
-map.on('load', () => {
     map.on('dblclick', function (e) {
         pos = e.lngLat.toArray();
 
@@ -63,10 +63,4 @@ function pufunc() {
         .setLngLat(pos)
         .addTo(map);
     popup.remove();
-}
-
-function getCities(){
-    fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-        return response.json();
-    })
 }
