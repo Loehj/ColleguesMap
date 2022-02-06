@@ -31,7 +31,8 @@ var popup;
 
 map.on('load', () => {
     fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-    return response.json();
+    console.log(response);
+    return response;
 }).then(data => {
     for (let i = 0; i < data.length; i++) {
         const city = data[i];
