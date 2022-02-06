@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Running on port ${port}`));
 
-
+//add city hardcoded to DB since heroku is dumb
 var db = new sqlite3.Database('./db/citiesDB.db', (err) => {
 	if (err) {
 		console.error(err.message);
@@ -21,6 +21,7 @@ db.close((err) => {
 	}
 })
 
+//endpoint for getting all DB entries
 app.get('/getCities', async (req, res) => {
 	var db = new sqlite3.Database('./db/citiesDB.db', (err) => {
 		if (err) {
@@ -41,6 +42,7 @@ app.get('/getCities', async (req, res) => {
 	})
 });
 
+//endpoint for adding city 
 app.post('/addCity', (req, res) => {
 	console.log(req.query);
 	if(req.query.city != null && req.query.lat != null && req.query.lng != null && req.query.city != "" && req.query.lat != "" && req.query.lng != ""){
@@ -63,6 +65,7 @@ app.post('/addCity', (req, res) => {
 	})
 });
 
+//group by and count optionally for later usage
 app.get('/getCitiesGrouped', async (req, res) => {
 	var db = new sqlite3.Database('./db/citiesDB.db', (err) => {
 		if (err) {

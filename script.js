@@ -32,6 +32,7 @@ var pos;
 var popup;
 
 map.on('load', () => {
+    //theoretically add all current cities from DB to map
     fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
         return response.json;
     }).then(data => {
@@ -44,6 +45,7 @@ map.on('load', () => {
         }
     })
 
+    //add new city when double clicking. First click location is converted to city and then show popup wether to add that city
     map.on('dblclick', function (e) {
 
         pos = e.lngLat.toArray();
@@ -58,8 +60,18 @@ map.on('load', () => {
                 .setLngLat(pos)
                 .setHTML(`<div id='pu-div'><p>${place}</p><button id='pu-button' onclick='pufunc()'>confirm</button></div>`)
                 .addTo(map);
+        })
+    });
+});
 
-            var url = `https://collegues-map.herokuapp.com/addCity?city=${place}&lat=${pos[1]}&lng=${pos[0]}`;
+function pufunc() {
+    //if confirm is pressed show tmp marker and add to DB
+    new mapboxgl.Marker()
+        .setLngLat(pos)
+        .addTo(map);
+    popup.remove();
+
+    var url = `https://collegues-map.herokuapp.com/addCity?city=${place}&lat=${pos[1]}&lng=${pos[0]}`;
             const params = {
                 city: place,
                 lat: pos[1],
@@ -73,15 +85,5 @@ map.on('load', () => {
                 .then( response => response.json() )
                 .then( response => {
                     console.log(response);
-                } );
-   
-        })
-    });
-});
-
-function pufunc() {
-    new mapboxgl.Marker()
-        .setLngLat(pos)
-        .addTo(map);
-    popup.remove();
+    } );
 }
