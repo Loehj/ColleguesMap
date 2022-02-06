@@ -31,17 +31,21 @@ var popup;
 
 map.on('load', () => {
     fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-    console.log(response);
-    return response;
-}).then(data => {
-    for (let i = 0; i < data.length; i++) {
-        const city = data[i];
-        new mapboxgl.Marker()
-        .setLngLat([city.lng, city.lat])
-        .addTo(map);
-        console.log(city);
-    }
-})
+        console.log(response);
+        new mapboxgl.Popup()
+            .setLngLat(-40, 170)
+            .setHTML(response)
+            .addTo(map);
+        return response;
+    }).then(data => {
+        for (let i = 0; i < data.length; i++) {
+            const city = data[i];
+            new mapboxgl.Marker()
+                .setLngLat([city.lng, city.lat])
+                .addTo(map);
+            console.log(city);
+        }
+    })
     map.on('dblclick', function (e) {
         pos = e.lngLat.toArray();
 
