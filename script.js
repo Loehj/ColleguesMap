@@ -1,5 +1,7 @@
 //const { response } = require("express");
 
+const res = require("express/lib/response");
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoia2FyYXRlNCIsImEiOiJja3o1YzFhcGowa2U5MnhxZm9jcGx3czA4In0.DnVEciTb-0dVXI3oExaosg';
 const map = new mapboxgl.Map({
     container: 'map', // container ID
@@ -30,18 +32,19 @@ var pos;
 var popup;
 
 map.on('load', () => {
+    fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
+        return response.json;
+    }).then(data => {
+        for (let i = 0; i < data.length; i++) {
+            const city = data[i];
+            new mapboxgl.Marker()
+                .setLngLat([city.lng, city.lat])
+                .addTo(map);
+            console.log(city + "added");
+        }
+    })
+
     map.on('dblclick', function (e) {
-        fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-            return response.json;
-        }).then(data => {
-            for (let i = 0; i < data.length; i++) {
-                const city = data[i];
-                new mapboxgl.Marker()
-                    .setLngLat([city.lng, city.lat])
-                    .addTo(map);
-                console.log(city);
-            }
-        })
 
         pos = e.lngLat.toArray();
 
@@ -55,6 +58,23 @@ map.on('load', () => {
                 .setLngLat(pos)
                 .setHTML(`<div id='pu-div'><p>${place}</p><button id='pu-button' onclick='pufunc()'>confirm</button></div>`)
                 .addTo(map);
+
+            var url = `https://collegues-map.herokuapp.com/addCity?city=${place}&lat=${pos[1]}&lng=${pos[0]}`;
+            const params = {
+                city: place,
+                lat: pos[1],
+                lng: pos[0] 
+            };
+            const options = {
+                method: 'POST',
+                body: JSON.stringify( params )  
+            };
+            fetch( 'https://collegues-map.herokuapp.com/addCity', options )
+                .then( response => response.json() )
+                .then( response => {
+                    console.log(response);
+                } );
+   
         })
     });
 });
