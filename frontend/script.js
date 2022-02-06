@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoia2FyYXRlNCIsImEiOiJja3o1YzFhcGowa2U5MnhxZm9jcGx3czA4In0.DnVEciTb-0dVXI3oExaosg';
 const map = new mapboxgl.Map({
     container: 'map', // container ID
@@ -28,6 +30,16 @@ var pos;
 var popup;
 
 map.on('load', () => {
+    fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
+        return response.json();
+    }).then(data => {
+        for (let i = 0; i < data.length; i++) {
+            const city = data[i];
+            pos[0] = city.lng;
+            pos[1] = city.lat;
+            pufunc();
+        }
+    })
     map.on('dblclick', function (e) {
         pos = e.lngLat.toArray();
 
@@ -50,4 +62,10 @@ function pufunc() {
         .setLngLat(pos)
         .addTo(map);
     popup.remove();
+}
+
+function getCities(){
+    fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
+        return response.json();
+    })
 }
