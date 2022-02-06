@@ -1,4 +1,4 @@
-const { response } = require("express");
+//const { response } = require("express");
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoia2FyYXRlNCIsImEiOiJja3o1YzFhcGowa2U5MnhxZm9jcGx3czA4In0.DnVEciTb-0dVXI3oExaosg';
 const map = new mapboxgl.Map({
