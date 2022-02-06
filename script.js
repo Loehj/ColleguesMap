@@ -30,11 +30,6 @@ var pos;
 var popup;
 
 fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-    console.log(response);
-    popup = new mapboxgl.Popup()
-        .setLngLat(-40, 170)
-        .setHTML(response)
-        .addTo(map);
     return response;
 }).then(data => {
     for (let i = 0; i < data.length; i++) {
