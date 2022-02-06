@@ -34,9 +34,9 @@ fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
 }).then(data => {
     for (let i = 0; i < data.length; i++) {
         const city = data[i];
-        pos[0] = city.lng;
-        pos[1] = city.lat;
-        pufunc();
+        new mapboxgl.Marker()
+        .setLngLat([city.lng, city.lat])
+        .addTo(map);
     }
 })
 
