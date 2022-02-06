@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Running on port ${port}`));
 
-/*
+
 var db = new sqlite3.Database('./db/citiesDB.db', (err) => {
 	if (err) {
 		console.error(err.message);
@@ -19,7 +19,7 @@ db.close((err) => {
 	if (err) {
 		console.error(err.message);
 	}
-})*/
+})
 
 app.get('/getCities', async (req, res) => {
 	var db = new sqlite3.Database('./db/citiesDB.db', (err) => {

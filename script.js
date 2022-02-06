@@ -29,20 +29,20 @@ var place;
 var pos;
 var popup;
 
-fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
-    return response.json;
-}).then(data => {
-    for (let i = 0; i < data.length; i++) {
-        const city = data[i];
-        new mapboxgl.Marker()
-            .setLngLat([city.lng, city.lat])
-            .addTo(map);
-        console.log(city);
-    }
-})
-
 map.on('load', () => {
     map.on('dblclick', function (e) {
+        fetch(`https://collegues-map.herokuapp.com/getCities`).then(response =>{
+            return response.json;
+        }).then(data => {
+            for (let i = 0; i < data.length; i++) {
+                const city = data[i];
+                new mapboxgl.Marker()
+                    .setLngLat([city.lng, city.lat])
+                    .addTo(map);
+                console.log(city);
+            }
+        })
+
         pos = e.lngLat.toArray();
 
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pos[0]},${pos[1]}.json?types=place&access_token=${mapboxgl.accessToken}`).then(response => {
