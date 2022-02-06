@@ -14,6 +14,7 @@ app.get('/getCities', async (req, res) => {
 	})
 	db.all(`SELECT * FROM cities`, (err, rows) => {
 		if (err){
+			console.log("hi");
 		  res.status(500).send(err);
 		}
 		res.status(200).send(rows);
